@@ -1,6 +1,5 @@
 syms('x','y','s','deriv', 'xstart', 'xend', 'h', 'corrects')
-
-
+%test first commit
 
 fprintf(1,'This is the Modified Euler Method\n');
 fprintf(1,'Input derivative in terms of x and y\n');
