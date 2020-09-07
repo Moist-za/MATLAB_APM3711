@@ -1,24 +1,29 @@
 %declare some variables
-syms('x','y','deriv', 'xstart', 'xend', 'h', 'corrects') %not sure if i
-%need this line
-
+syms('x','y','deriv', 'xstart', 'xend', 'h', 'corrects') 
 
 fprintf(1,'This is the Modified Euler Method\n');
-fprintf(1,'Input derivative in terms of x and y, i.e. y''=(x)+(y)\n');
+fprintf(1,'Input derivative in terms of x and y, i.e. y''=(x)+(y):\n');
 %take input of derivative in terms of x and y, i.e. y'=(x)+(y)
-deriv = inline(input(' '), 'x','y');
+s = input(' ');
+deriv = inline(s, 'x','y');
+fprintf(1,'%s\n',s);
 
-fprintf(1,'This is the Modified Euler Method\n');
-fprintf(1,'Input exact equation. e.g. y=2(x) (''write 2(x)'')\n');
-exact = inline(input(' '), 'x');
+fprintf(1, '\n');
+fprintf(1,'Input exact equation. e.g. y=2(x) (''write 2(x)''):\n');
+s = input(' ');
+exact = inline(s, 'x');
+fprintf(1,'%s\n',s);
 
+fprintf(1, '\n');
 fprintf(1,'Input range: Start, End, initial y value, h, corrects\n');
 xstart = input(' ');
 xend = input(' ');
 yinitial = input(' ');
 h = input(' ');
 corrects = input(' ');
-
+fprintf(1, '\n');
+fprintf(1,'Start: %d, End: %d, Initial y value: %d, h: %d, corrects: %d\n', xstart, xend, yinitial, h, corrects);
+fprintf(1, '\n');
 
 n = round((xend-xstart)/h); %calculates number of iterations required
 x = xstart;
@@ -26,7 +31,7 @@ y = yinitial;
 y_error = inline('(y_ex)-(y)','y_ex','y');%calculates error
 
 %layout of output
-fprintf(1, 'x \t\t y_exact \ty_predicted \terror\t\ty_1stCorr \ty_2ndCorr \n');
+fprintf(1, 'x \t\t\ty_exact \ty_predicted \terror\t\ty_1stCorr \ty_2ndCorr \n');
 fprintf(1, '\n');
 
 %display first line before calculations
