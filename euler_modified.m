@@ -1,15 +1,16 @@
-syms('x','y','s','deriv', 'xstart', 'xend', 'h', 'corrects')
-%test first commit
+%declare some variables
+syms('x','y','deriv', 'xstart', 'xend', 'h', 'corrects') %not sure if i
+%need this line
+
 
 fprintf(1,'This is the Modified Euler Method\n');
-fprintf(1,'Input derivative in terms of x and y\n');
-s = input(' ');
-deriv = inline(s, 'x','y');
+fprintf(1,'Input derivative in terms of x and y, i.e. y''=(x)+(y)\n');
+%take input of derivative in terms of x and y, i.e. y'=(x)+(y)
+deriv = inline(input(' '), 'x','y');
 
 fprintf(1,'This is the Modified Euler Method\n');
-fprintf(1,'Input exact equation y=somethingx\n');
-ex = input(' ');
-exact = inline(ex, 'x');
+fprintf(1,'Input exact equation. e.g. y=2(x) (''write 2(x)'')\n');
+exact = inline(input(' '), 'x');
 
 fprintf(1,'Input range: Start, End, initial y value, h, corrects\n');
 xstart = input(' ');
@@ -18,33 +19,36 @@ yinitial = input(' ');
 h = input(' ');
 corrects = input(' ');
 
-n = round((xend-xstart)/h);
+
+n = round((xend-xstart)/h); %calculates number of iterations required
 x = xstart;
 y = yinitial;
+y_error = inline('(y_ex)-(y)','y_ex','y');%calculates error
 
-fprintf(1, 'x \t y_ex \t y_pred \t ycor1 \t ycor2 \n');
+%layout of output
+fprintf(1, 'x \t\t y_exact \ty_predicted \terror\t\ty_1stCorr \ty_2ndCorr \n');
 fprintf(1, '\n');
-fprintf(1, '%f \t %f \n',x,y);
 
-
-for i=0:n
+%display first line before calculations
+fprintf (1, '%f \t%f \t%f \t\t%f \t',x,y,y,y_error(y,y));%y==yinitial, so duplicate
+  
+%to calculate the rest of the values;
+for i=1:n
     
-    f_old = deriv(x,y);
-    x = x+h;
-    y_ex = exact(x); 
-    fprintf (1, '%f \t %f \t',x,y_ex);
-    y_pred =y + h*(f_old);
-    fprintf (1, '%f \t',y_pred);
+    f_old = deriv(x,y); %calculate derivative on 'old' values
+    x = x+h;%increment by h
+    y_ex = exact(x); %calculate new y value using analytical solution
+    y_pred =y + h*(f_old); %predict 1
     
     for j=1:corrects
         f_pred = deriv(x,y_pred);
-        y_pred = y + h/2*(f_old + f_pred);
+        y_pred = y + h/2*(f_old + f_pred); %correction calculation
         fprintf (1, '%f \t',y_pred);
     end
-    
+    fprintf (1, '\n');
     y = y_pred;
-    fprintf(1,'y: %f \t x: %f \n',y,x);
+    fprintf (1, '%f \t%f \t%f \t\t%f \t',x,y_ex,y,y_error(y_ex,y));
 end
-    
+fprintf (1, '\n');    
 
 
