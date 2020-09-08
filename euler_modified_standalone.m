@@ -1,5 +1,5 @@
 %declare some variables
-syms('x','y','deriv', 'xstart', 'xend', 'h', 'corrects') 
+syms('x','y', 'y_ex') 
 
 fprintf(1,'This is the Modified Euler Method\n');
 fprintf(1,'Input derivative in terms of x and y, i.e. y''=(x)+(y):\n');
