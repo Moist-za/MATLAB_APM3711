@@ -4,7 +4,7 @@ function f = deriv1val(x,y)
 
 
 %enter function to be evaluated
-%f = y*sin(pi*x);
-f = 2*cos(2*x)-exp(-x);
+f = y*sin(pi*x);
+%f = 2*cos(2*x)-exp(-x);
 
 end
